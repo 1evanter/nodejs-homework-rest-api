@@ -5,11 +5,7 @@ const contacts = require("../../models/contacts.js");
 
 const router = express.Router();
 
-const HttpError = (status, { message }) => {
-  const error = new Error(message);
-  error.status = status;
-  return error;
-};
+const { HttpError } = require("../../helpers/HttpError.js");
 
 const addSchema = Joi.object({
   name: Joi.string().required(),
