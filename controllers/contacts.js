@@ -13,12 +13,12 @@ const addSchema = Joi.object({
     .required(),
 });
 
-const getAllContacts = async (req, res, next) => {
+const getAllContacts = async (req, res) => {
   const result = await contacts.listContacts();
   res.status(200).json(result);
 };
 
-const getContactById = async (req, res, next) => {
+const getContactById = async (req, res) => {
   const { contactId } = req.params;
   const result = await contacts.getContactById(contactId);
 
@@ -29,7 +29,7 @@ const getContactById = async (req, res, next) => {
   res.status(200).json(result);
 };
 
-const addContact = async (req, res, next) => {
+const addContact = async (req, res) => {
   const { error } = addSchema.validate(req.body);
   if (error) {
     throw HttpError(400, { message: "missing required name field" });
@@ -38,7 +38,7 @@ const addContact = async (req, res, next) => {
   res.status(201).json(result);
 };
 
-const updateContact = async (req, res, next) => {
+const updateContact = async (req, res) => {
   const { error } = addSchema.validate(req.body);
   if (error) {
     throw HttpError(400, { message: "missing fields" });
@@ -53,7 +53,7 @@ const updateContact = async (req, res, next) => {
   res.status(200).json(result);
 };
 
-const deleteContact = async (req, res, next) => {
+const deleteContact = async (req, res) => {
   const { contactId } = req.params;
   const result = await contacts.removeContact(contactId);
   console.log(result);
