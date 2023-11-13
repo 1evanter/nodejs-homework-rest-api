@@ -20,19 +20,11 @@ const getAllContacts = async (req, res) => {
 // };
 
 // const addContact = async (req, res) => {
-//   const { error } = addSchema.validate(req.body);
-//   if (error) {
-//     throw HttpError(400, { message: "missing required name field" });
-//   }
 //   const result = await contacts.addContact(req.body);
 //   res.status(201).json(result);
 // };
 
 // const updateContact = async (req, res) => {
-//   const { error } = addSchema.validate(req.body);
-//   if (error) {
-//     throw HttpError(400, { message: "missing fields" });
-//   }
 //   const { contactId } = req.params;
 //   const result = await contacts.updateContact(contactId, req.body);
 
