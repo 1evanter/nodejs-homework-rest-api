@@ -36,7 +36,9 @@ const addSchema = Joi.object({
 });
 
 const updateStatusSchema = Joi.object({
-  favorite: Joi.boolean().required(),
+  favorite: Joi.boolean()
+    .required()
+    .messages({ "any.required": "favorite is required" }),
 });
 
 const schemas = {
