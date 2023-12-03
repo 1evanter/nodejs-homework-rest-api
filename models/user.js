@@ -42,7 +42,7 @@ const loginSchema = Joi.object({
 });
 
 const updateAvatarSchema = Joi.object({
-  avatarURL: Joi.string().required(),
+  avatarURL: Joi.string(),
 });
 
 const schemas = {
