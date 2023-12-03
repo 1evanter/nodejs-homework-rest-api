@@ -41,9 +41,14 @@ const loginSchema = Joi.object({
   password: Joi.string().min(6).required(),
 });
 
+const updateAvatarSchema = Joi.object({
+  avatarURL: Joi.string(),
+});
+
 const schemas = {
   registerSchema,
   loginSchema,
+  updateAvatarSchema,
 };
 
 const User = model("user", userSchema);
