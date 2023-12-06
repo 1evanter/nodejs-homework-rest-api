@@ -6,7 +6,7 @@ const Jimp = require("jimp");
 const fs = require("fs/promises");
 
 const { User } = require("../models/user");
-const { ctrlWrapper, HttpError } = require("../helpers");
+const { ctrlWrapper, HttpError, sendEmail } = require("../helpers");
 
 const { SECRET_KEY } = process.env;
 
@@ -23,6 +23,13 @@ const register = async (req, res) => {
 
   const hashPassword = await bcrypt.hash(password, 10);
   const avatarURL = gravatar.url(email);
+
+  await sendEmail({
+    to: "rita.oleksenkoo@gmail.com",
+    subject: "Welcome to phonebook",
+    html: "<h1>To confirm your registration click on the <a href=''>link</a></h1>",
+    text: "To confirm your registration open the link",
+  });
 
   await User.create({ email, password: hashPassword, avatarURL });
 
