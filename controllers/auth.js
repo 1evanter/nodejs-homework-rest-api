@@ -4,6 +4,7 @@ const gravatar = require("gravatar");
 const path = require("path");
 const Jimp = require("jimp");
 const fs = require("fs/promises");
+const crypto = require("node:crypto");
 
 const { User } = require("../models/user");
 const { ctrlWrapper, HttpError, sendEmail } = require("../helpers");
@@ -23,15 +24,23 @@ const register = async (req, res) => {
 
   const hashPassword = await bcrypt.hash(password, 10);
   const avatarURL = gravatar.url(email);
+  const verificationToken = crypto.randomUUID();
 
-  await sendEmail({
-    to: "rita.oleksenkoo@gmail.com",
-    subject: "Welcome to phonebook",
-    html: "<h1>To confirm your registration click on the <a href=''>link</a></h1>",
-    text: "To confirm your registration open the link",
+  await User.create({
+    email,
+    password: hashPassword,
+    avatarURL,
+    verificationToken,
   });
 
-  await User.create({ email, password: hashPassword, avatarURL });
+  const verifyEmail = {
+    to: "rita.oleksenkoo@gmail.com",
+    subject: "Verify email",
+    html: `<p>To confirm your registration click on the <a href='http://localhost:3000/users/verify/${verificationToken}'>link</a></p>`,
+    text: `To confirm your registration open the link http://localhost:3000/users/verify/${verificationToken}`,
+  };
+
+  await sendEmail(verifyEmail);
 
   res.status(201).json({
     user: {
