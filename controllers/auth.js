@@ -34,7 +34,7 @@ const register = async (req, res) => {
   });
 
   const verifyEmail = {
-    to: "rita.oleksenkoo@gmail.com",
+    to: email,
     subject: "Verify email",
     html: `<p>To confirm your registration click on the <a href='http://localhost:3000/users/verify/${verificationToken}'>link</a></p>`,
     text: `To confirm your registration open the link http://localhost:3000/users/verify/${verificationToken}`,
@@ -52,7 +52,7 @@ const register = async (req, res) => {
 
 const verifyEmail = async (req, res) => {
   const { verificationToken } = req.params;
-  const user = User.findOne({ verificationToken });
+  const user = await User.findOne({ verificationToken });
   if (!user) {
     throw HttpError(404, "User not found");
   }
