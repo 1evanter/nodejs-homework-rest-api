@@ -11,15 +11,9 @@ const transport = nodemailer.createTransport({
   },
 });
 
-// const message = {
-//   to: "rita.oleksenkoo@gmail.com",
-//   from: "rita.oleksenkoo@gmail.com",
-//   subject: "Test email",
-//   html: "<h1><b>Test email</b> from me</h1>",
-//   rext: "Test email from me",
-// };
-
 const sendEmail = async (message) => {
+  message.from = "rita.oleksenkoo@gmail.com";
+
   return transport.sendMail(message);
 };
 
